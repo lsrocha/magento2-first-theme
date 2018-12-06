@@ -1,0 +1,49 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Customer\Block\Account\Customer $block */
+?>
+
+<?php if (!$block->customerLoggedIn()): ?>
+<div data-bind="scope: 'account-menu'">
+    <form action="#" method="POST" data-bind="submit: login">
+        <fieldset>
+            <legend><?php echo __('Sign-in'); ?></legend>
+            <?php echo $block->getBlockHtml('formkey'); ?>
+
+            <div data-bind="visible: !askLogin()">
+                <label for="customer_email"><?php echo __('Email'); ?></label>
+                <input type="email" id="customer_email" name="customer_email" data-bind="textInput: email" />
+
+                <button type="button" data-bind="click: checkEmail, visible: !askLogin()"><?php echo __('Next'); ?></button>
+            </div>
+
+            <div data-bind="visible: askLogin" style="display: none;">
+                <label for="customer_password"><?php echo __('Password'); ?></label>
+                <input type="password" id="customer_password" name="customer_password" data-bind="textInput: password" />
+
+                <button type="button" data-bind="click: editEmail">&lsaquo;</button>
+                <button type="submit"><?php echo __('Sign-in'); ?></button>
+
+                <a href="<?php echo $block->getUrl('customer/account/forgotpassword'); ?>"><?php echo __('Forgot Password'); ?></a>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "account-menu": {
+                        "component": "Magento_Customer/js/customer-account-menu"
+                    }
+                }
+            }
+        }
+    }
+</script>
+<?php else: ?>
+<p>Welcome</p>
+<?php endif; ?>
